@@ -12,5 +12,5 @@ wait_for_service() {
     echo "$service is ready!"
 }
 # Подождать, пока PostgreSQL полностью инициализируется
-wait_for_service "PostgreSQL" "postgres_13_meta" "5432"
-pgloader --debug sqlite://dir_db/data.db postgresql://metabase:metabase@postgres_13_meta:5432/video
+wait_for_service "PostgreSQL" "postgres_16_meta" "5432"
+pgloader --debug sqlite://dir_db/data.db postgresql://metabase:metabase@postgres_16_meta:5432/video

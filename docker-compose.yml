@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:13
-    container_name: postgres_13_meta
+    image: postgres:16
+    container_name: postgres_16_meta
     environment:
       POSTGRES_USER: metabase
       POSTGRES_PASSWORD: metabase
