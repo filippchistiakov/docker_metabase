@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: metabase
       POSTGRES_DB: my_db
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -22,8 +22,16 @@ services:
       - "3000:3000"
     environment:
       MB_DB_HOST: host_for_metabase_site
+      MB_PLUGINS_DIR: /plugins
     depends_on:
       - postgres
+    entrypoint: >
+      sh -c "
+      apk update && apk add wget curl &&
+      mkdir -p /plugins &&
+      wget -O /plugins/metabase-clickhouse-driver.jar $(curl -s https://api.github.com/repos/ClickHouse/metabase-clickhouse-driver/releases/latest | grep browser_download_url | grep jar | cut -d '\"' -f 4) &&
+      exec /app/run_metabase.sh
+      "
     networks:
       - pgsql_network
   pgloader:
